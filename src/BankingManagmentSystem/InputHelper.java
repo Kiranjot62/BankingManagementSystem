@@ -3,48 +3,71 @@ package BankingManagmentSystem;
 import java.util.Scanner;
 
 public class InputHelper {
+    static Scanner scanner = new Scanner(System.in);
+
     private InputHelper() {
         // utility class, not meant to be instantiated
     }
 
-    public static int readInt(Scanner scanner) {
-        while (!scanner.hasNextInt()) {
-            System.out.println("Please enter a valid whole number: ");
-            scanner.next();
-        }
-        return scanner.nextInt();
-    }
+    public static int readInt(String prompt) {
 
-    public static long readLong(Scanner scanner) {
-        while (!scanner.hasNextLong()) {
-            System.out.println("Please enter a valid number: ");
-            scanner.next();
-        }
-        return scanner.nextLong();
-    }
-
-    public static double readPositiveDouble(Scanner scanner) {
         while (true) {
-            if (scanner.hasNextDouble()) {
-                double value = scanner.nextDouble();
+            System.out.print(prompt);
+
+            try {
+                return Integer.parseInt(scanner.nextLine().trim());
+
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid whole number.");
+            }
+        }
+    }
+
+    public static long readLong(String prompt) {
+
+        while (true) {
+            System.out.print(prompt);
+
+            try {
+                return Long.parseLong(scanner.nextLine().trim());
+
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
+    }
+
+    public static double readPositiveDouble(String prompt) {
+
+        while (true) {
+            System.out.print(prompt);
+
+            try {
+                double value = Double.parseDouble(scanner.nextLine().trim());
+
                 if (value > 0) {
                     return value;
                 }
-                System.out.println("Amount must be greater than 0: ");
-            } else {
-                System.out.println("Please enter a valid amount: ");
-                scanner.next();
+
+                System.out.println("Amount must be greater than 0.");
+
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid amount.");
             }
         }
     }
 
-    public static String readNonEmptyLine(Scanner scanner, String prompt) {
+    public static String readNonEmptyLine(String prompt) {
+
         while (true) {
-            System.out.println(prompt);
-            String value = scanner.nextLine();
-            if (value != null && !value.trim().isEmpty()) {
-                return value.trim();
+            System.out.print(prompt);
+
+            String value = scanner.nextLine().trim();
+
+            if (!value.isEmpty()) {
+                return value;
             }
+
             System.out.println("This field cannot be empty.");
         }
     }
